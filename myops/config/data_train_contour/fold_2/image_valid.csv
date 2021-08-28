@@ -1,0 +1,6 @@
+imagesTr,imagesTr.1,imagesTr.2,labelsTr,contoursTr
+imagesTr/myops_training_113_C0.nii.gz,imagesTr/myops_training_113_DE.nii.gz,imagesTr/myops_training_113_T2.nii.gz,labelsTr/myops_training_113_gd.nii.gz,contoursTr/myops_training_113_contour.nii.gz
+imagesTr/myops_training_103_C0.nii.gz,imagesTr/myops_training_103_DE.nii.gz,imagesTr/myops_training_103_T2.nii.gz,labelsTr/myops_training_103_gd.nii.gz,contoursTr/myops_training_103_contour.nii.gz
+imagesTr/myops_training_118_C0.nii.gz,imagesTr/myops_training_118_DE.nii.gz,imagesTr/myops_training_118_T2.nii.gz,labelsTr/myops_training_118_gd.nii.gz,contoursTr/myops_training_118_contour.nii.gz
+imagesTr/myops_training_101_C0.nii.gz,imagesTr/myops_training_101_DE.nii.gz,imagesTr/myops_training_101_T2.nii.gz,labelsTr/myops_training_101_gd.nii.gz,contoursTr/myops_training_101_contour.nii.gz
+imagesTr/myops_training_122_C0.nii.gz,imagesTr/myops_training_122_DE.nii.gz,imagesTr/myops_training_122_T2.nii.gz,labelsTr/myops_training_122_gd.nii.gz,contoursTr/myops_training_122_contour.nii.gz
