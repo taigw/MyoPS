@@ -1,7 +1,5 @@
 # MyoPS 2020 Challenge
-[PyMIC_link]:https://github.com/HiLab-git/PyMIC
-[nnUNet_link]:https://github.com/MIC-DKFZ/nnUNet
-This repository provides source code for myocardial pathology segmentation. The method is detailed in the [paper](https://link.springer.com/chapter/10.1007/978-3-030-65651-5_5), and it won the 1st place of [MyoPS 2020](http://www.sdspeople.fudan.edu.cn/zhuangxiahai/0/myops20). Our code is adapted from [PyMIC](PyMIC_link), a pytorch-based toolkit for medical image computing with deep learning, that is lightweight and easy to use, and [nnUNet](nnUNet_link), a self-adaptive segmentation method for medical images. We used an older version of [PyMIC](PyMIC_link) and changed a small part of code, so the package may be different from recent releases.
+This repository provides source code for myocardial pathology segmentation. The method is detailed in the [paper](https://link.springer.com/chapter/10.1007/978-3-030-65651-5_5), and it won the 1st place of [MyoPS 2020](http://www.sdspeople.fudan.edu.cn/zhuangxiahai/0/myops20). Our code is adapted from [PyMIC][PyMIC_link], a pytorch-based toolkit for medical image computing with deep learning, that is lightweight and easy to use, and [nnUNet][nnUNet_link], a self-adaptive segmentation method for medical images. We used an older version of [PyMIC][PyMIC_link] and changed a small part of code, so the package may be different from recent releases.
 ## Dataset
 Download the dataset from [MyoPS 2020](http://www.sdspeople.fudan.edu.cn/zhuangxiahai/0/myops20) and put the dataset in the `DataDir` such as `/mnt/data1/swzhai/dataset/MyoPS`, specifically, `DataDir/data_raw/imagesTr` for training images, `DataDir/data_raw/labelsTr` for training ground truth and `DataDir/data_raw/imagesTs` for test images.
 
@@ -11,16 +9,16 @@ python find_bbox_of_dataset.py
 ```
 ## Requirements
 Some important required packages include(our test environment):
-* [Pytorch][https://pytorch.org] == 1.9.0
+* [Pytorch](https://pytorch.org) == 1.9.0
 * Python == 3.8.10
 * Some basic python packages such as Numpy, Scikit-image, SimpleITK, Scipy ......
-* Download [nnUNet](nnUNet_link) and [PyMIC](PyMIC_link), and put them in the `ProjectDir` such as `/mnt/data1/swzhai/projects/MyoPS`.
+* Download [nnUNet][nnUNet_link] and [PyMIC][PyMIC_link], and put them in the `ProjectDir` such as `/mnt/data1/swzhai/projects/MyoPS`.
 ## Set environment variables
-* Set python path for [PyMIC](PyMIC_link). Run:
+* Set python path for [PyMIC][PyMIC_link]. Run:
 ``` bash
 export PYTHONPATH=$PYTHONPATH:ProjectDir
 ```
-* Install [nnUNet](nnUNet_link) and set environment variables.
+* Install [nnUNet][nnUNet_link] and set environment variables.
 ```bash
 cd nnUNet
 pip install -e .
@@ -36,7 +34,7 @@ export RESULTS_FOLDER="/mnt/data1/swzhai/projects/MyoPS/myops/result_nnunet"
 ```
 
 ## Coarse segmentation
-We adopt a coarse-to-fine method, [PyMIC](PyMIC_link) for coarse segmentation due to its legibility and expandability and [nnUNet](nnUNet_link) for fine segmentation.
+We adopt a coarse-to-fine method, [PyMIC][PyMIC_link] for coarse segmentation due to its legibility and expandability and [nnUNet][nnUNet_link] for fine segmentation.
 ### training
 
 * Change "/fold_X" to "/fold_1", "/fold_2", "/fold_3", "/fold_4", "/fold_5" in turn in train.cfg and run the following two line of commands. You will get a model for each fold and corresponding predictions of validation dataset.
@@ -66,7 +64,7 @@ python postprocess.py test
 python crop_acc_preds.py test
 ```
 ## Fine segmentation
-Here we get coarse segmentation results in `/mnt/data1/swzhai/dataset/MyoPS/nnUNet_raw_data_base`. Next, we use them as the "4th modality"(_0003) while the first 3 modalities are C0(_0000), DE(_0001) and T2(_0002). This section is highly dependent on [nnUNet](nnUNet_link), so to understand the following commands please refer to [nnUNet](nnUNet_link). 
+Here we get coarse segmentation results in `/mnt/data1/swzhai/dataset/MyoPS/nnUNet_raw_data_base`. Next, we use them as the "4th modality"(_0003) while the first 3 modalities are C0(_0000), DE(_0001) and T2(_0002). This section is highly dependent on [nnUNet][nnUNet_link], so to understand the following commands please refer to [nnUNet][nnUNet_link]. 
 
 Tips: In order to save unnecessary time, you can change `self.max_num_epochs = 1000` to `self.max_num_epochs = 300` in `nnUNet/nnunet/training/network_training/nnUNetTrainerV2.py`.
 ### training
@@ -112,5 +110,7 @@ Because we crop the images twice in the whole process, we need to Insert the cro
 ```bash
 python get_final_test.py
 ```
+[PyMIC_link]:https://github.com/HiLab-git/PyMIC
+[nnUNet_link]:https://github.com/MIC-DKFZ/nnUNet
 
 ***This README is to be improved and questions are welcome.***
