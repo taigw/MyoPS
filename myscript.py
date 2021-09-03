@@ -1,7 +1,6 @@
 from batchgenerators.utilities.file_and_folder_operations import load_json, load_pickle
 import numpy as np
 import os
-import cv2
 from scipy import ndimage
 # x = 1
 # y = x

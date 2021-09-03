@@ -2,7 +2,7 @@ import os
 import numpy as np
 import SimpleITK as sitk
 from collections import OrderedDict
-from batchgenerators.utilities.file_and_folder_operations import save_json
+from batchgenerators.utilities.file_and_folder_operations import save_json, maybe_mkdir_p
 from pymic.util.image_process import get_ND_bounding_box, crop_ND_volume_with_bounding_box, \
     set_ND_volume_roi_with_bounding_box_range, convert_label
 from pymic.io_my.image_read_write import save_cropped_array_as_nifty_volume
@@ -36,8 +36,8 @@ def crop_dataset_with_bbox(input_dir, output_dir, crop_bbox_min_hw, crop_bbox_ma
         
 
 if __name__ == "__main__":
-    input_dir = "/mnt/39E12DAE493BA6C1/datasets/MyoPS_test/data_raw"
-    output_dir = "/mnt/39E12DAE493BA6C1/datasets/MyoPS_test/data_preprocessed"
+    input_dir = "/mnt/data1/swzhai/dataset/MyoPS_copy/data_raw"
+    output_dir = "/mnt/data1/swzhai/dataset/MyoPS_copy/data_preprocessed"
     source_list = [200, 500, 600, 1220, 2221]
     target_list = [1, 2, 3, 4, 5]
     imagesTr_dir = os.path.join(input_dir, "imagesTr")
@@ -47,8 +47,11 @@ if __name__ == "__main__":
     labelsTr_name_list.sort()
     num_data = len(labelsTr_name_list)
     imagesTr_output_dir = os.path.join(output_dir, "imagesTr")
+    maybe_mkdir_p(imagesTr_output_dir)
     labelsTr_output_dir = os.path.join(output_dir, "labelsTr")
+    maybe_mkdir_p(labelsTr_output_dir)
     imagesTs_output_dir = os.path.join(output_dir, "imagesTs")
+    maybe_mkdir_p(imagesTs_output_dir)
 
     crop_bbox_min_all = []
     crop_bbox_max_all = []

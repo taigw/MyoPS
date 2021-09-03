@@ -7,7 +7,7 @@ from pymic.io_my.image_read_write import load_image_as_nd_array, save_nd_array_a
 from pymic.util.image_process import convert_label
 
 if __name__ == "__main__":
-    root_dir = "/mnt/39E12DAE493BA6C1/datasets/MyoPS_test/nnUNet_raw_data_base/nnUNet_raw_data/Task112_MyoPS"
+    root_dir = "/mnt/data1/swzhai/dataset/MyoPS_copy/nnUNet_raw_data_base/nnUNet_raw_data/Task112_MyoPS"
     lablesTr_list = (os.listdir(os.path.join(root_dir, "labelsTr")))
     lablesTr_list.remove("crop_information.json")
     lablesTr_list.sort()
