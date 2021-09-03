@@ -14,8 +14,8 @@ from pymic.util.image_process import (
     set_ND_volume_roi_with_bounding_box_range)
 
 if __name__ == "__main__":
-    first_crop = "/mnt/data1/swzhai/dataset/MyoPS_copy/data_preprocessed/imagesTs/crop_information.json"
-    second_crop = "/mnt/data1/swzhai/dataset/MyoPS_copy/nnUNet_raw_data_base/nnUNet_raw_data/Task112_MyoPS/imagesTs/crop_information.json"
+    first_crop = "/mnt/data1/swzhai/dataset/MyoPS/data_preprocessed/imagesTs/crop_information.json"
+    second_crop = "/mnt/data1/swzhai/dataset/MyoPS/nnUNet_raw_data_base/nnUNet_raw_data/Task112_MyoPS/imagesTs/crop_information.json"
     first_json = load_json((first_crop))
     second_json = load_json(second_crop)
     # print(first_json)
@@ -24,9 +24,9 @@ if __name__ == "__main__":
     # print(second_json)
     # print(len(second_json.keys()))
     # exit()
-    seg_dir = "/mnt/data1/swzhai/projects/MyoPS_copy/myops/result_nnunet/test_ensemble"
-    save_dir = "/mnt/data1/swzhai/projects/MyoPS_copy/myops/result_nnunet/test_ensemble_original"
-    img_dir = "/mnt/data1/swzhai/dataset/MyoPS_copy/data_raw/imagesTs"
+    seg_dir = "/mnt/data1/swzhai/projects/MyoPS/myops/result_nnunet/test_ensemble"
+    save_dir = "/mnt/data1/swzhai/projects/MyoPS/myops/result_nnunet/test_ensemble_original"
+    img_dir = "/mnt/data1/swzhai/dataset/MyoPS/data_raw/imagesTs"
     maybe_mkdir_p(save_dir)
     for pred_name in second_json.keys():
         seg_name = pred_name.split("/")[-1]

@@ -108,9 +108,9 @@ if __name__ == "__main__":
         print('    python postprrcess.py train')
         exit()
     stage = str(sys.argv[1])
-    root_dir = "/mnt/data1/swzhai/dataset/MyoPS_copy/data_preprocessed"
+    root_dir = "/mnt/data1/swzhai/dataset/MyoPS/data_preprocessed"
     # Task112_MyoPS: use labelsTr(GTs) to crop and use predsTr(predictions) as coarse segmentation
-    output_dir = "/mnt/data1/swzhai/dataset/MyoPS_copy/nnUNet_raw_data_base/nnUNet_raw_data/Task112_MyoPS"
+    output_dir = "/mnt/data1/swzhai/dataset/MyoPS/nnUNet_raw_data_base/nnUNet_raw_data/Task112_MyoPS"
 
     if stage == "train":
         imagesTr_dir = os.path.join(root_dir, "imagesTr")
@@ -144,7 +144,7 @@ if __name__ == "__main__":
         raise ValueError
 
     # pkl_path = "splits_final.pkl"
-    # pkl_dir = "/mnt/data1/swzhai/dataset/MyoPS_copy/nnUNet_preprocessed/Task112_MyoPS"
+    # pkl_dir = "/mnt/data1/swzhai/dataset/MyoPS/nnUNet_preprocessed/Task112_MyoPS"
     # if not os.path.exists(pkl_dir):
     #     os.makedirs(pkl_dir)
     # pkl = load_pickle(pkl_path)

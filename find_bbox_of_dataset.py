@@ -36,8 +36,8 @@ def crop_dataset_with_bbox(input_dir, output_dir, crop_bbox_min_hw, crop_bbox_ma
         
 
 if __name__ == "__main__":
-    input_dir = "/mnt/data1/swzhai/dataset/MyoPS_copy/data_raw"
-    output_dir = "/mnt/data1/swzhai/dataset/MyoPS_copy/data_preprocessed"
+    input_dir = "/mnt/data1/swzhai/dataset/MyoPS/data_raw"
+    output_dir = "/mnt/data1/swzhai/dataset/MyoPS/data_preprocessed"
     source_list = [200, 500, 600, 1220, 2221]
     target_list = [1, 2, 3, 4, 5]
     imagesTr_dir = os.path.join(input_dir, "imagesTr")
