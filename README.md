@@ -1,4 +1,6 @@
 # MyoPS 2020 Challenge
+[PyMIC_link]:https://github.com/HiLab-git/PyMIC
+[nnUNet_link]:https://github.com/MIC-DKFZ/nnUNet
 This repository provides source code for myocardial pathology segmentation. The method is detailed in the [paper](https://link.springer.com/chapter/10.1007/978-3-030-65651-5_5), and it won the 1st place of [MyoPS 2020](http://www.sdspeople.fudan.edu.cn/zhuangxiahai/0/myops20). Our code is adapted from [PyMIC][PyMIC_link], a pytorch-based toolkit for medical image computing with deep learning, that is lightweight and easy to use, and [nnUNet][nnUNet_link], a self-adaptive segmentation method for medical images. We used an older version of [PyMIC][PyMIC_link] and changed a small part of code, so the package may be different from recent releases.
 ## Dataset
 Download the dataset from [MyoPS 2020](http://www.sdspeople.fudan.edu.cn/zhuangxiahai/0/myops20) and put the dataset in the `DataDir` such as `/mnt/data1/swzhai/dataset/MyoPS`, specifically, `DataDir/data_raw/imagesTr` for training images, `DataDir/data_raw/labelsTr` for training ground truth and `DataDir/data_raw/imagesTs` for test images.
@@ -106,11 +108,19 @@ Replace `FOLDER_WITH_TEST_CASES` with the test dataset folder `DataDir/nnUNet_ra
 
 Notice: Add arguments "--save_npz" and "--npz" to save .npz file which are model probability for future ensemble.
 
-Because we crop the images twice in the whole process, we need to Insert the cropped images into the original images by using `crop_information.json`. Set your foler path and Run:
+Because we crop the images twice in the whole process, we need to insert the cropped images into the original images by using `crop_information.json`. Set your foler path and Run:
 ```bash
 python get_final_test.py
 ```
-[PyMIC_link]:https://github.com/HiLab-git/PyMIC
-[nnUNet_link]:https://github.com/MIC-DKFZ/nnUNet
-
+## Citation
+```
+@inproceedings{zhai2020myocardial,
+  title={Myocardial edema and scar segmentation using a coarse-to-fine framework with weighted ensemble},
+  author={Zhai, Shuwei and Gu, Ran and Lei, Wenhui and Wang, Guotai},
+  booktitle={Myocardial Pathology Segmentation Combining Multi-Sequence CMR Challenge},
+  pages={49--59},
+  year={2020},
+  organization={Springer}
+}
+```
 ***This README is to be improved and questions are welcome.***
