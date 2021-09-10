@@ -6,7 +6,7 @@ This repository provides source code for myocardial pathology segmentation. The 
 Download the dataset from [MyoPS 2020](http://www.sdspeople.fudan.edu.cn/zhuangxiahai/0/myops20) and put the dataset in the `DataDir` such as `/mnt/data1/swzhai/dataset/MyoPS`, specifically, `DataDir/data_raw/imagesTr` for training images, `DataDir/data_raw/labelsTr` for training ground truth and `DataDir/data_raw/imagesTs` for test images.
 
 Get the maximal bounding box according to the training ground truth. Crop all images and ground truth with the maximal bounding box and save them in `DataDir/data_preprocessed/imagesTr`, `DataDir/data_preprocessed/labelsTr` and `DataDir/data_preprocessed/imagesTs` respectively. `crop_information.json` in each folder contains bounding box coordinates that will be used at fine segmentation stage. Run:
-```bash
+```python
 python find_bbox_of_dataset.py
 ```
 ## Requirements
@@ -38,31 +38,41 @@ export RESULTS_FOLDER="/mnt/data1/swzhai/projects/MyoPS/myops/result_nnunet"
 ## Coarse segmentation
 We adopt a coarse-to-fine method, [PyMIC][PyMIC_link] for coarse segmentation due to its legibility and expandability and [nnUNet][nnUNet_link] for fine segmentation.
 ### training
-
 * Change "/fold_X" to "/fold_1", "/fold_2", "/fold_3", "/fold_4", "/fold_5" in turn in train.cfg and run the following two line of commands. You will get a model for each fold and corresponding predictions of validation dataset.
-```bash
+```python
 python pymic/net_run/net_run.py train myops/config/train.cfg
 python pymic/net_run/net_run.py test myops/config/train.cfg
 ```
 * Get the largest connected component. Run:
-```bash
+```python
 python postprocess.py train
 ```
-* Here we have predictions of each fold as coarse segmentation in `myops/result_train_post`. 
-```bash
+* Here we have predictions of each fold as coarse segmentation in `myops/result_train_post`. Then crop the training images and training ground truth again. Run:
+```python
 python crop_acc_preds.py train
 ```
+### training Dice scores
+Get the Dice scores of 5 folds before and after postprocess and save them in `dice.csv` file. Set `pred_dir` and `gt_dir` and run:
+```python
+python get_metrics.py
+```
+My results are as follow:
+|---|label_1|label_2|label_3|
+|---|---|---|---|
+|w/o pp|0.8709|0.9050|0.9076|
+|w/ pp|0.8770|0.9117|0.9128|
+
 ### inference
 Use the coarse model to infer test dataset. Run:
-```bash
+```python
 python pymic/net_run/net_run.py test myops/config/test.cfg
 ```
 * Get the largest connected component. Run:
-```bash
+```python
 python postprocess.py test
 ```
-* Here we have predictions of test datset as coarse segmentation in `myops/result_test_post`. 
-```bash
+* Here we have predictions of test datset as coarse segmentation in `myops/result_test_post`. Then crop the test images again. Run:
+```python
 python crop_acc_preds.py test
 ```
 ## Fine segmentation
@@ -71,25 +81,35 @@ Here we get coarse segmentation results in `/mnt/data1/swzhai/dataset/MyoPS/nnUN
 Tips: In order to save unnecessary time, you can change `self.max_num_epochs = 1000` to `self.max_num_epochs = 300` in `nnUNet/nnunet/training/network_training/nnUNetTrainerV2.py`.
 ### training
 * Dataset conversion and preprocess. Run:
-```bash
+```python
 python Task112_MyoPS.py
 nnUNet_plan_and_preprocess -t 112 --verify_dataset_integrity
 ```
 * Train 2D UNet. For FOLD in [0, 1, 2, 3, 4], run:
-```bash
+```python
 nnUNet_train 2d nnUNetTrainerV2 Task112_MyoPS FOLD --npz
 ```
 * Train 2.5D(3D) UNet. For FOLD in [0, 1, 2, 3, 4], run:
-```bash
+```python
 nnUNet_train 3d_fullres nnUNetTrainerV2 Task112_MyoPS FOLD --npz
 ```
+### training Dice scores
+We can see multiple metrics in `summary.json` in the subfolders of `myops/result_nnunet`. My results are as follow:
+|---|label_1|label_2|label_3|label_4|label_5|
+|---|---|---|---|---|---|
+|2D UNet(w/o pp)|0.7926|0.9208|0.9197|0.3873|0.6096|
+|2D UNet(w/ pp)|0.7933|0.9211|0.9205|0.3873|0.6098|
+|2.5D UNet(w/o pp)|0.7904|0.9206|0.9241|0.3644|0.6191|
+|2.5D UNet(w/ pp)|0.7923|0.9206|0.9241|0.3644|0.6191|
+|ensemble|0.8016|0.9244|0.9246|0.3933|0.6303|
+
 ### inference
 Here we have 2 fine models(i.e. 2D UNet and 2.5D UNet). Run:
-```bash
+```python
 nnUNet_find_best_configuration -m 2d 3d_fullres -t 112
 ```
 The terminal will output some commands that are used to infer test dataset and get their ensemble. In my case, I get the following commands: 
-```bash
+```python
 nnUNet_predict -i FOLDER_WITH_TEST_CASES -o OUTPUT_FOLDER_MODEL1 -tr nnUNetTrainerV2 -ctr nnUNetTrainerV2CascadeFullRes -m 2d -p nnUNetPlansv2.1 -t Task112_MyoPS
 
 nnUNet_predict -i FOLDER_WITH_TEST_CASES -o OUTPUT_FOLDER_MODEL2 -tr nnUNetTrainerV2 -ctr nnUNetTrainerV2CascadeFullRes -m 3d_fullres -p nnUNetPlansv2.1 -t Task112_MyoPS
@@ -109,7 +129,7 @@ Replace `FOLDER_WITH_TEST_CASES` with the test dataset folder `DataDir/nnUNet_ra
 Notice: Add arguments "--save_npz" and "--npz" to save .npz file which are model probability for future ensemble.
 
 Because we crop the images twice in the whole process, we need to insert the cropped images into the original images by using `crop_information.json`. Set your foler path and Run:
-```bash
+```python
 python get_final_test.py
 ```
 ## Citation
