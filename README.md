@@ -65,7 +65,7 @@ My results are as follow:
 ### inference
 Use the coarse model to infer test dataset. Run:
 ```python
-python pymic/net_run/net_run.py test myops/config/test.cfg
+python pymic/net_run/net_run.py ensemble myops/config/test.cfg
 ```
 * Get the largest connected component. Run:
 ```python
